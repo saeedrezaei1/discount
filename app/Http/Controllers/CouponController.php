@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class CouponController extends Controller
 {
-    public function create()
+    public function create($locale)
     {
+        app()->setLocale($locale);
         return view('admin.discount.use');
     }
     public function use(Request $request)

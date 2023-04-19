@@ -2,7 +2,7 @@
 @extends('admin.master')
 
 @section('content')
-    <h3 class="mt-2">use coupon</h3>
+    <h3 class="mt-2">{{ __('use.enter') }}</h3>
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>

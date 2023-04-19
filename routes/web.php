@@ -19,6 +19,6 @@ Route::get('/', function () {
 
 Route::resource('discount',\App\Http\Controllers\DiscountController::class);
 
-Route::get('/coupon',[\App\Http\Controllers\CouponController::class,'create']);
+Route::get('/coupon/{locale}',[\App\Http\Controllers\CouponController::class,'create']);
 Route::post('/coupon',[\App\Http\Controllers\CouponController::class,'use'])->name('coupon');
 
