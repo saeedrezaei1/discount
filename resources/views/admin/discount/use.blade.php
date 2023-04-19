@@ -16,11 +16,11 @@
     <form action="{{ route('coupon') }}" method="POST" >
         @csrf
         <div class="mb-3">
-            <label for="code" class="form-label">entre Coupon code:</label>
+            <label for="code" class="form-label"></label>
             <input type="text" class="form-control" name="code" value="" id="" aria-describedby="emailHelp">
         </div>
 
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">{{ __('use.submit') }}</button>
     </form>
 @endsection
