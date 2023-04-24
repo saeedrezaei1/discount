@@ -16,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-//    Auth::attempt(['email' => 'ali@example.com', 'password' => '123456']);
-    return view('welcome');
+      $job =  \App\Jobs\SendEmail::dispatch()->delay(now()->addMinutes(10));
+      return view('welcome');
 });
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -37,3 +39,5 @@ Route::middleware('admin')->group(function () {
     Route::get('/coupon/{locale}',[\App\Http\Controllers\CouponController::class,'create']);
     Route::post('/coupon',[\App\Http\Controllers\CouponController::class,'use'])->name('coupon');
 });
+
+Route::get('jobs',[\App\Http\Controllers\JobsController::class,'index']);
