@@ -8,7 +8,8 @@
                         <div class="card">
                             <h3 class="card-header text-center">Edit TODO</h3>
                             <div class="card-body">
-                                <form action="{{ route('todo.store',$todo->id) }}" method="POST">
+                                <form action="{{ route('todo.update',$todo->id) }}" method="POST">
+                                    @method('PATCH')
                                     @csrf
                                     <div class="form-group mb-3">
                                         <input type="text" placeholder="{{__('Name')}}" id="name" class="form-control" name="name"

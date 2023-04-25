@@ -64,9 +64,8 @@ class TodoController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
-        Todo::update([
-            'name' => $request->name,
-        ]);
+
+        $todo->update($request->all());
         return redirect()->route('todo.index');
     }
 

@@ -19,9 +19,9 @@
     <tr>
         <th scope="row"></th>
         <td>{{$todo->name}}</td>
-        <td><a href="{{route('todo.edit',$todo->id)}}" class="btn btn-primary">edit</a></td>
         <td>
             <form action="{{route('todo.destroy',$todo->id)}}" method="post" >
+                <a href="{{route('todo.edit',$todo->id)}}" class="btn btn-primary">edit</a>
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">delete</button>
