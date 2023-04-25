@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthCustomController;
+use App\Http\Controllers\ForgetPassController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-      $job =  \App\Jobs\SendEmail::dispatch()->delay(now()->addMinutes(10));
+      $job =  \App\Jobs\SendEmail::dispatch()->delay(now()->addMinutes(1));
       return view('welcome');
 });
 
@@ -41,3 +43,20 @@ Route::middleware('admin')->group(function () {
 });
 
 Route::get('jobs',[\App\Http\Controllers\JobsController::class,'index']);
+
+
+Route::prefix('{locale}')->group(function () {
+    Route::get('dashboard-user', [AuthCustomController::class, 'dashboard'])->name('dashboard-user');
+    Route::get('login-user', [AuthCustomController::class, 'index'])->name('login-user');
+    Route::post('custom-login', [AuthCustomController::class, 'customLogin'])->name('login.custom');
+    Route::get('registration', [AuthCustomController::class, 'registration'])->name('register-user');
+    Route::post('custom-registration', [AuthCustomController::class, 'customRegistration'])->name('register.custom');
+    Route::get('signout-user', [AuthCustomController::class, 'signOut'])->name('signout-user');
+    Route::get('forget-pass', [ForgetPassController::class, 'forget'])->name('pass.request');
+    Route::post('forget-pass', [ForgetPassController::class, 'forgetPass'])->name('pass.email');
+    Route::get('reset-pass/{token}', [ForgetPassController::class, 'showResetPasswordForm'])->name('reset.pass.get');
+    Route::post('reset-pass', [ForgetPassController::class, 'submitResetPasswordForm'])->name('reset.pass.post');
+
+});
+Route::middleware('customAuth')->resource('todo', \App\Http\Controllers\TodoController::class);
+
