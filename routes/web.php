@@ -58,5 +58,7 @@ Route::prefix('{locale}')->group(function () {
     Route::post('reset-pass', [ForgetPassController::class, 'submitResetPasswordForm'])->name('reset.pass.post');
 
 });
+
+
 Route::middleware('customAuth')->resource('todo', \App\Http\Controllers\TodoController::class);
 

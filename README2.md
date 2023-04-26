@@ -22,3 +22,13 @@ STEPS:
 * and resource route for "/TODO"
 * New middleware => CustomAuth and add it to Kernel.php
 * at the end Write CRUD operation for todoList in TodoController
+****
+>## Auth Api with JWT
+* for the first step I installed `php-open-source-saver/jwt-auth` package 
+* published `config/jwt.php`
+* generate jwt secret key in .env file with this command `php artisan jwt:secret`
+* so `config/auth.php` needs some changes to recognize jwt as a auth driver
+* add `JWTSubject` implement and 2 corresponding methods to User model 
+* after that I made `AuthController` and 4 routes in Api.php for sign up , login ,logout and refresh tokens.
+* And `Api/ForgetController` and 2 routes for forget Email and reset operation (By using reset-tokens table).  
+* eventually we utilized POSTMAN app to test all required endpoints .  
