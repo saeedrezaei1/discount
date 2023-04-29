@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustomLoginRequest;
+use App\Http\Requests\CustomRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -18,13 +20,9 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login','register','forget','submitResetPasswordForm']]);
     }
 
-    public function login(Request $request)
+    public function login(CustomLoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->safe()->only(['email', 'password']);
 
         $token = Auth::attempt($credentials);
         if (!$token) {
@@ -46,13 +44,17 @@ class AuthController extends Controller
 
     }
 
-    public function register(Request $request){
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
-
+    public function register(CustomRegisterRequest $request){
+dd(1);
+        $validated = $request->validated();
+        if (!$validated) {
+            return response()
+            ->json([
+                'status' => 'error',
+                'message' => 'wrong email or password',
+            ], 422)->header('Content-Type' , 'application/json')
+                ->header('Accept' , 'application/json');
+        }
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthCustomController;
 use App\Http\Controllers\ForgetPassController;
 use App\Http\Controllers\ProfileController;
+use http\Cookie;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -17,8 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test', function (){
+    return null;
+});
 Route::get('/', function () {
-      $job =  \App\Jobs\SendEmail::dispatch()->delay(now()->addMinutes(1));
+//      $job =  \App\Jobs\SendEmail::dispatch()->delay(now()->addMinutes(1));
       return view('welcome');
 });
 
@@ -62,3 +66,6 @@ Route::prefix('{locale}')->group(function () {
 
 Route::middleware('customAuth')->resource('todo', \App\Http\Controllers\TodoController::class);
 
+Route::get('khedmat', function (){
+   return view('khedmat');
+});

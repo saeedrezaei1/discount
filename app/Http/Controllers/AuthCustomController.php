@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustomLoginRequest;
+use App\Http\Requests\CustomRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -25,13 +27,8 @@ class AuthCustomController extends Controller
         return view('authenticate.login',compact('locale'));
     }
 
-    public function customLogin(Request $request, $locale)
+    public function customLogin(CustomLoginRequest $request, $locale)
     {
-
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
@@ -52,13 +49,8 @@ class AuthCustomController extends Controller
         return view('authenticate.register',compact('locale'));
     }
 
-    public function customRegistration(Request $request, $locale)
+    public function customRegistration(CustomRegisterRequest $request, $locale)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-        ]);
 
         $data = $request->all();
         $check = $this->create($data);

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomLoginRequest;
+use App\Http\Requests\CustomRegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,12 +14,9 @@ use Illuminate\Support\Str;
 
 class ForgetPassController extends Controller
 {
-    public function forget(Request $request)
+    public function forget(CustomLoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|exists:users',
-        ]);
-
+        $credential = $request->safe()->only(['email']);
         $token = Str::random(64);
 
         DB::table('password_reset_tokens')->insert([
@@ -40,7 +39,7 @@ class ForgetPassController extends Controller
     }
 
 
-    public function submitResetPasswordForm(Request $request)
+    public function submitResetPasswordForm(CustomRegisterRequest $request)
     {
         $request->validate([
             'email' => 'required|email|exists:users',
